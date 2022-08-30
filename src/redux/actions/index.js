@@ -2,11 +2,13 @@ export const USER_EMAIL = 'USER_EMAIL';
 export const VALUE_WALLET = 'VALUE_WALLET';
 export const CURRENCY_WALLET = 'CURRENCY_WALLET';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const VALUE_EXPENSE = 'VALUE_EXPENSE';
 
 export const userEmail = (email) => ({ type: USER_EMAIL, email });
 const currencyWallet = () => ({ type: CURRENCY_WALLET });
 export const valueWallet = (data) => ({ type: VALUE_WALLET, data });
 const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
+export const valueExpense = (value) => ({ type: VALUE_EXPENSE, value });
 
 export const fetchCurrencyWallet = () => async (dispatch) => {
   dispatch(currencyWallet());

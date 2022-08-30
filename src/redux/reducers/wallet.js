@@ -1,10 +1,13 @@
-import { CURRENCY_WALLET, VALUE_WALLET, FAILED_REQUEST } from '../actions';
+import {
+  CURRENCY_WALLET,
+  VALUE_WALLET,
+  FAILED_REQUEST,
+  VALUE_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
-  expenses: [{
-    totalExpenses: 0,
-  }], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
+  expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
   isFetching: false,
   error: '',
   editor: false, // valor booleano que indica de uma despesa está sendo editada
@@ -29,6 +32,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       isFetching: true,
       error: action.error,
+    };
+  case VALUE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.value],
     };
   default:
     return state;
