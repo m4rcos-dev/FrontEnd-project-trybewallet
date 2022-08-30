@@ -3,6 +3,7 @@ import {
   VALUE_WALLET,
   FAILED_REQUEST,
   VALUE_EXPENSE,
+  DELETE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -37,6 +38,11 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses, action.value],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: action.arr,
     };
   default:
     return state;

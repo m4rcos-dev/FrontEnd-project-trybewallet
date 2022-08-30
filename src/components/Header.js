@@ -19,7 +19,7 @@ class Header extends Component {
   render() {
     const { email, expenses } = this.props;
     const validExpense = expenses.length > 0;
-    const expensesTotal = validExpense ? this.currentCurrency() : 0;
+    const expensesTotal = validExpense ? this.currentCurrency() : Number(0).toFixed(2);
     return (
       <div>
         <span data-testid="email-field">
