@@ -56,7 +56,7 @@ class Table extends Component {
           {expenses.map((expense) => (
             <tbody key={ expense.id }>
               <tr>
-                <td>{expense.description}</td>
+                <td data-testid="expense-description">{expense.description}</td>
                 <td>{expense.tag}</td>
                 <td>{expense.method}</td>
                 <td>{Number(expense.value).toFixed(2)}</td>

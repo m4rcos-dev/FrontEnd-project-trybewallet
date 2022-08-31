@@ -9,11 +9,11 @@ class Header extends Component {
     expenses.forEach((expense) => {
       const { value, currency, exchangeRates } = expense;
       const currentCurrency = exchangeRates[currency].ask;
-      const sumValue = value * currentCurrency;
+      const sumValue = parseFloat(value) * currentCurrency;
       arrCurrency.push(sumValue);
     });
     const total = arrCurrency.reduce((acc, curr) => acc + curr, 0);
-    return parseFloat(total).toFixed(2);
+    return Number(total).toFixed(2);
   };
 
   render() {
