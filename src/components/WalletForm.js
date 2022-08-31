@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencyWallet, valueExpense } from '../redux/actions';
+import {
+  addEditExpense,
+  editExpense,
+  fetchCurrencyWallet,
+  valueExpense,
+} from '../redux/actions';
 
+const INITIAL_STATE = {
+  value: '',
+  description: '',
+  currency: 'USD',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
+  exchangeRates: [],
+};
 class WalletForm extends Component {
   constructor() {
     super();
@@ -37,18 +50,41 @@ class WalletForm extends Component {
       dispatch(valueExpense(this.state));
       this.setState((previousState) => ({
         id: previousState.id + 1,
-        value: '',
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
-        exchangeRates: [],
+        ...INITIAL_STATE,
+      }));
+    });
+  };
+
+  addEditExpense = async (event) => {
+    event.preventDefault();
+    const { idToEdit, expenses } = this.props;
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = await response.json();
+    delete data.USDT;
+    this.setState({ exchangeRates: data, id: idToEdit }, () => {
+      const currentIndex = expenses.findIndex((expense) => expense.id === idToEdit);
+      const removeExpense = expenses
+        .filter((currentExpense) => currentExpense.id !== idToEdit);
+      const newExpense = [...removeExpense, expenses[currentIndex] = { ...this.state }];
+      const newExpenseSort = newExpense.sort((a, b) => {
+        if (a.id < b.id) {
+          const validSort = -1;
+          return validSort;
+        }
+        return true;
+      });
+      const { dispatch } = this.props;
+      dispatch(addEditExpense(newExpenseSort));
+      dispatch(editExpense(0, false));
+      this.setState((previousState) => ({
+        id: previousState,
+        ...INITIAL_STATE,
       }));
     });
   };
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
     const {
       value,
       description,
@@ -56,6 +92,8 @@ class WalletForm extends Component {
       method,
       tag,
     } = this.state;
+    const validDisplayButtomEdit = editor ? 'inline' : 'none';
+    const validDisplayButtomAdd = editor ? 'none' : 'inline';
     return (
       <div>
         <form>
@@ -130,12 +168,25 @@ class WalletForm extends Component {
               <option value="Saúde">Saúde</option>
             </select>
           </label>
-          <button
-            type="submit"
-            onClick={ this.addExpense }
-          >
-            Adicionar despesa
-          </button>
+          {editor
+            ? <div /> : (
+              <button
+                type="submit"
+                onClick={ this.addExpense }
+                style={ { display: validDisplayButtomAdd } }
+              >
+                Adicionar despesa
+              </button>
+            )}
+          {editor ? (
+            <button
+              type="submit"
+              onClick={ this.addEditExpense }
+              style={ { display: validDisplayButtomEdit } }
+            >
+              Editar despesa
+            </button>
+          ) : <div />}
         </form>
       </div>
     );
@@ -145,6 +196,28 @@ class WalletForm extends Component {
 WalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  idToEdit: PropTypes.number.isRequired,
+  editor: PropTypes.bool.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    exchangeRates: PropTypes.objectOf(PropTypes.shape({
+      code: PropTypes.string.isRequired,
+      codein: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      high: PropTypes.string.isRequired,
+      low: PropTypes.string.isRequired,
+      varBid: PropTypes.string.isRequired,
+      pctChange: PropTypes.string.isRequired,
+      bid: PropTypes.string.isRequired,
+      ask: PropTypes.string.isRequired,
+      timestamp: PropTypes.string.isRequired,
+      create_date: PropTypes.string.isRequired,
+    })).isRequired,
+  })).isRequired,
 };
 
 const mapStateToProps = (state) => ({

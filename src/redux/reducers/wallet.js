@@ -4,6 +4,8 @@ import {
   FAILED_REQUEST,
   VALUE_EXPENSE,
   DELETE_EXPENSE,
+  EDIT_EXPENSE,
+  ADD_EDIT_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -43,6 +45,17 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: action.arr,
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      editor: action.isEdit,
+      idToEdit: action.id,
+    };
+  case ADD_EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: action.value,
     };
   default:
     return state;
