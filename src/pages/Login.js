@@ -8,10 +8,10 @@ import { Box,
   Stack,
   styled,
   TextField,
-  Typography } from '@mui/material';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+} from '@mui/material';
 import { userEmail } from '../redux/actions';
 import Image from '../images/backgroundLogin.jpg';
+import TitleLogo from '../components/TitleLogo';
 
 class Login extends React.Component {
   constructor() {
@@ -109,30 +109,7 @@ class Login extends React.Component {
           >
             <Stack spacing={ 2 }>
 
-              <Box
-                sx={ {
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-evenly',
-                } }
-              >
-                <AccountBalanceWalletIcon
-                  fontSize="large"
-                  color="primary"
-                />
-                <Typography
-                  variant="h3"
-                  color="primary"
-                >
-                  Trybe
-                </Typography>
-                <Typography
-                  variant="h3"
-                  color="secondary"
-                >
-                  Wallet
-                </Typography>
-              </Box>
+              <TitleLogo />
 
               <TextField
                 sx={ {
