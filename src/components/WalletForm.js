@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable react/jsx-max-depth */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -241,17 +242,8 @@ WalletForm.propTypes = {
     method: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
     exchangeRates: PropTypes.objectOf(PropTypes.shape({
-      code: PropTypes.string.isRequired,
-      codein: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      high: PropTypes.string.isRequired,
-      low: PropTypes.string.isRequired,
-      varBid: PropTypes.string.isRequired,
-      pctChange: PropTypes.string.isRequired,
-      bid: PropTypes.string.isRequired,
       ask: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
-      create_date: PropTypes.string.isRequired,
     })).isRequired,
   })).isRequired,
 };

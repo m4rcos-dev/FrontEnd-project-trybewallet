@@ -17,3 +17,7 @@ function App() {
 export default App;
 
 // iniciando projeto
+// Mobile First /carteira
+// Criar Page NotFound
+// Criar Loading Chamar API
+// Corrigir Erros Inputs tela de Login

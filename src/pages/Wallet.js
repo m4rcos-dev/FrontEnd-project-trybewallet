@@ -1,7 +1,7 @@
 import { Box, Paper } from '@mui/material';
 import React from 'react';
 import Header from '../components/Header';
-import Table from '../components/Table';
+import TableExpense from '../components/TableExpenses';
 import WalletForm from '../components/WalletForm';
 import Image from '../images/backgroundPages.jpg';
 
@@ -21,7 +21,9 @@ class Wallet extends React.Component {
       >
         <Paper
           sx={ {
-            widht: '80%',
+            minWidht: '80%',
+            position: 'fixed',
+            // width: '75rem',
             boxShadow: '-4px 9px 13px ',
             borderRadius: '0.625rem',
           } }
@@ -29,7 +31,21 @@ class Wallet extends React.Component {
           <Header />
           <WalletForm />
         </Paper>
-        <Table />
+        <Paper
+          sx={ {
+            display: 'flex',
+            justifyContent: 'center',
+            minwidht: '80%',
+            width: '75rem',
+            mt: '30vh',
+            pt: '7vh',
+            boxShadow: '-4px 9px 13px ',
+            borderRadius: '0.625rem',
+            backgroundColor: 'primary.main',
+          } }
+        >
+          <TableExpense />
+        </Paper>
       </Box>
     );
   }
