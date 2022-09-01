@@ -1,7 +1,17 @@
+/* eslint-disable react/jsx-max-depth */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Box,
+  Button,
+  Paper,
+  Stack,
+  styled,
+  TextField,
+  Typography } from '@mui/material';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { userEmail } from '../redux/actions';
+import Image from '../images/backgroundLogin.jpg';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +20,8 @@ class Login extends React.Component {
       email: '',
       password: '',
       isDisable: true,
+      emailValid: false,
+      passwordValid: false,
     };
   }
 
@@ -29,8 +41,14 @@ class Login extends React.Component {
 
     this.setState({ [name]: target.value }, () => {
       const { email, password } = this.state;
+      const validEmail = this.validEmail(email);
+      const validPassword = this.validPassword(password);
       const validAll = this.validEmail(email) && this.validPassword(password);
-      this.setState({ isDisable: !validAll });
+      this.setState({
+        isDisable: !validAll,
+        emailValid: !validEmail,
+        passwordValid: !validPassword,
+      });
     });
   };
 
@@ -43,37 +61,120 @@ class Login extends React.Component {
   };
 
   render() {
-    const { email, password, isDisable } = this.state;
+    // =============BreakPoints==========================
+    const PaperCustom = styled(Paper)(({ theme }) => ({
+      [theme.breakpoints.down('sm')]: {
+        width: '20rem',
+        height: '20rem',
+      },
+    }));
+
+    const BoxCustom = styled('div')(({ theme }) => ({
+      [theme.breakpoints.down('sm')]: {
+        width: '15rem',
+      },
+    }));
+
+    const { email, password, isDisable, emailValid, passwordValid } = this.state;
     return (
-      <div>
-        <label htmlFor="emailInput">
-          <input
-            type="text"
-            id="emailInput"
-            data-testid="email-input"
-            name="email"
-            value={ email }
-            onChange={ (event) => this.handleChange(event) }
-          />
-        </label>
-        <label htmlFor="passwordInput">
-          <input
-            type="password"
-            id="passwordInput"
-            data-testid="password-input"
-            name="password"
-            value={ password }
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          type="submit"
-          onClick={ this.submit }
-          disabled={ isDisable }
+      <Box
+        sx={ {
+          backgroundImage: `url(${Image})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+        } }
+      >
+
+        <PaperCustom
+          sx={ {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '32.813rem',
+            height: '22.25rem',
+            boxShadow: '-4px 9px 13px #036B52',
+          } }
         >
-          Entrar
-        </button>
-      </div>
+
+          <BoxCustom
+            sx={ {
+              width: '20.625rem',
+            } }
+          >
+            <Stack spacing={ 2 }>
+
+              <Box
+                sx={ {
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-evenly',
+                } }
+              >
+                <AccountBalanceWalletIcon
+                  fontSize="large"
+                  color="primary"
+                />
+                <Typography
+                  variant="h3"
+                  color="primary"
+                >
+                  Trybe
+                </Typography>
+                <Typography
+                  variant="h3"
+                  color="secondary"
+                >
+                  Wallet
+                </Typography>
+              </Box>
+
+              <TextField
+                sx={ {
+                  width: '100%',
+                } }
+                error={ emailValid }
+                id="outlined-error"
+                label="Email"
+                name="email"
+                value={ email }
+                onChange={ (event) => this.handleChange(event) }
+              />
+
+              <TextField
+                sx={ {
+                  width: '100%',
+                } }
+                error={ passwordValid }
+                id="outlined-password-input"
+                label="Senha"
+                name="password"
+                type="password"
+                value={ password }
+                onChange={ this.handleChange }
+              />
+
+              <Button
+                sx={ {
+                  width: '100%',
+                } }
+                variant="contained"
+                onClick={ this.submit }
+                disabled={ isDisable }
+              >
+                Entrar
+              </Button>
+            </Stack>
+
+          </BoxCustom>
+
+        </PaperCustom>
+      </Box>
     );
   }
 }
