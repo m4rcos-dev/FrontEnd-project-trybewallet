@@ -23,6 +23,7 @@ class Wallet extends React.Component {
           sx={ {
             widht: '80%',
             boxShadow: '-4px 9px 13px ',
+            borderRadius: '0.625rem',
           } }
         >
           <Header />

@@ -10,6 +10,7 @@ import {
   Select,
   TextField,
   Stack,
+  Button,
 } from '@mui/material';
 import {
   addEditExpense,
@@ -103,15 +104,14 @@ class WalletForm extends Component {
       method,
       tag,
     } = this.state;
-    const validDisplayButtomEdit = editor ? 'inline' : 'none';
-    const validDisplayButtomAdd = editor ? 'none' : 'inline';
     return (
       <Box
         sx={ {
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'center',
           backgroundColor: '#e1e5eb',
-          // opacity: '0.4',
+          borderRadius: '0.625rem',
           p: '3rem 1rem 1rem 1rem',
         } }
       >
@@ -188,26 +188,41 @@ class WalletForm extends Component {
             </FormControl>
           </Stack>
         </Box>
-        <Box>
+        <Box
+          sx={ {
+            width: '20%',
+            p: '2rem 0rem 1rem 0rem',
+          } }
+        >
           {editor
-            ? <div /> : (
-              <button
-                type="submit"
+            ? '' : (
+              <Button
+                sx={ {
+                  width: '100%',
+                  display: 'flex',
+                  color: 'common.white',
+                } }
+                color="secondary"
+                variant="contained"
                 onClick={ this.addExpense }
-                style={ { display: validDisplayButtomAdd } }
               >
                 Adicionar despesa
-              </button>
+              </Button>
             )}
           {editor ? (
-            <button
-              type="submit"
+            <Button
+              sx={ {
+                width: '100%',
+                display: 'flex',
+                color: 'common.white',
+              } }
+              color="secondary"
+              variant="contained"
               onClick={ this.addEditExpense }
-              style={ { display: validDisplayButtomEdit } }
             >
               Editar despesa
-            </button>
-          ) : <div />}
+            </Button>
+          ) : ''}
         </Box>
       </Box>
     );
