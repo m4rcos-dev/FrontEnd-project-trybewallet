@@ -7,7 +7,6 @@ import {
   fetchCurrencyWallet,
   valueExpense,
 } from '../redux/actions';
-import sortOjbt from '../tests/helpers/sortMock';
 
 const INITIAL_STATE = {
   value: '',
@@ -68,7 +67,13 @@ class WalletForm extends Component {
       const removeExpense = expenses
         .filter((currentExpense) => currentExpense.id !== idToEdit);
       const newExpense = [...removeExpense, expenses[currentIndex] = { ...this.state }];
-      const newExpenseSort = newExpense.sort((a, b) => sortOjbt(a, b));
+      const newExpenseSort = newExpense.sort((a, b) => {
+        if (a.id < b.id) {
+          const validSort = -1;
+          return validSort;
+        }
+        return true;
+      });
       const { dispatch } = this.props;
       dispatch(addEditExpense(newExpenseSort));
       dispatch(editExpense(0, false));
