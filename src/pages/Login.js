@@ -10,7 +10,7 @@ import { Box,
   TextField,
 } from '@mui/material';
 import { userEmail } from '../redux/actions';
-import Image from '../images/backgroundLogin.jpg';
+import Image from '../images/backgroundPages.jpg';
 import TitleLogo from '../components/TitleLogo';
 
 class Login extends React.Component {

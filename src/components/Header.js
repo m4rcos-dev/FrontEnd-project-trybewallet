@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Box, Typography } from '@mui/material';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import TitleLogo from './TitleLogo';
 
 class Header extends Component {
   currentCurrency = () => {
@@ -21,17 +25,55 @@ class Header extends Component {
     const validExpense = expenses.length > 0;
     const expensesTotal = validExpense ? this.currentCurrency() : Number(0).toFixed(2);
     return (
-      <div>
-        <span data-testid="email-field">
+      <Box
+        sx={ {
+          display: 'flex',
+        } }
+      >
+        <TitleLogo />
+        <Box
+          sx={ {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          } }
+        >
+          <LocalAtmIcon
+            fontSize="large"
+            color="primary"
+          />
+          <Typography
+            variant="h6"
+            color="primary"
+          >
+            Total de despesas:
+            {' '}
+            {expensesTotal}
+            {' '}
+            BRL
+          </Typography>
+          <AccountCircleIcon
+            fontSize="large"
+            color="secondary"
+          />
+          <Typography
+            variant="h6"
+            color="secondary"
+          >
+            {email}
+          </Typography>
+        </Box>
+
+        {/* <span data-testid="email-field">
           {email}
-        </span>
-        <span data-testid="total-field">
+        </span> */}
+        {/* <span data-testid="total-field">
           {expensesTotal}
-        </span>
-        <span data-testid="header-currency-field">
+        </span> */}
+        {/* <span data-testid="header-currency-field">
           BRL
-        </span>
-      </div>
+        </span> */}
+      </Box>
     );
   }
 }
