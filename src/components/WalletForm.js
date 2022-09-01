@@ -1,6 +1,16 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Stack,
+} from '@mui/material';
 import {
   addEditExpense,
   editExpense,
@@ -96,79 +106,89 @@ class WalletForm extends Component {
     const validDisplayButtomEdit = editor ? 'inline' : 'none';
     const validDisplayButtomAdd = editor ? 'none' : 'inline';
     return (
-      <div>
-        <form>
-          <label htmlFor="inputValue">
-            Valor:
-            <input
-              type="text"
-              id="inputValue"
+      <Box
+        sx={ {
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: '#e1e5eb',
+          // opacity: '0.4',
+          p: '3rem 1rem 1rem 1rem',
+        } }
+      >
+        <Box>
+          <Stack
+            direction="row"
+            spacing={ 3 }
+          >
+            <TextField
+              id="filled-basic"
+              label="Valor"
+              variant="filled"
+              type="number"
               name="value"
-              data-testid="value-input"
               onChange={ this.handleChange }
               value={ value }
             />
-          </label>
-          <label htmlFor="inputDescription">
-            Descrição:
-            <input
-              type="text"
-              id="inputDescription"
+            <TextField
+              id="filled-basic"
+              label="Breve Descrição"
+              variant="filled"
               name="description"
-              data-testid="description-input"
               onChange={ this.handleChange }
               value={ description }
             />
-          </label>
-          <label htmlFor="coin">
-            Moeda:
-            <select
-              name="currency"
-              id="coin"
-              data-testid="currency-input"
-              onChange={ this.handleChange }
-              value={ currency }
-            >
-              {currencies.map((currentCurrency, index) => (
-                <option
-                  key={ `${currentCurrency}${index}` }
-                  value={ currentCurrency }
-                >
-                  {currentCurrency}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="payment">
-            Metodo de pagamento:
-            <select
-              name="method"
-              id="payment"
-              data-testid="method-input"
-              onChange={ this.handleChange }
-              value={ method }
-            >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="category">
-            Categoria:
-            <select
-              name="tag"
-              id="category"
-              data-testid="tag-input"
-              onChange={ this.handleChange }
-              value={ tag }
-            >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </label>
+            <FormControl variant="filled" sx={ { minWidth: 120 } }>
+              <InputLabel id="select-coin-label">Moeda</InputLabel>
+              <Select
+                labelId="select-coin-label"
+                id="select-coin"
+                name="currency"
+                onChange={ this.handleChange }
+                value={ currency }
+              >
+                {currencies.map((currentCurrency, index) => (
+                  <MenuItem
+                    key={ `${currentCurrency}${index}` }
+                    value={ currentCurrency }
+                  >
+                    {currentCurrency}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl variant="filled" sx={ { minWidth: 200 } }>
+              <InputLabel id="select-method-label">Método de pagamento</InputLabel>
+              <Select
+                labelId="select-method-label"
+                id="select-method"
+                name="method"
+                onChange={ this.handleChange }
+                value={ method }
+              >
+                <MenuItem value="Dinheiro">Dinheiro</MenuItem>
+                <MenuItem value="Cartão de crédito">Cartão de crédito</MenuItem>
+                <MenuItem value="Cartão de débito">Cartão de débito</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl variant="filled" sx={ { minWidth: 200 } }>
+              <InputLabel id="select-tag-label">Categoria</InputLabel>
+              <Select
+                labelId="select-tag-label"
+                id="select-tag"
+                name="tag"
+                onChange={ this.handleChange }
+                value={ tag }
+              >
+                <MenuItem value="Alimentação">Alimentação</MenuItem>
+                <MenuItem value="Lazer">Lazer</MenuItem>
+                <MenuItem value="Trabalho">Trabalho</MenuItem>
+                <MenuItem value="Transporte">Transporte</MenuItem>
+                <MenuItem value="Saúde">Saúde</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
+        </Box>
+        <Box>
           {editor
             ? <div /> : (
               <button
@@ -188,8 +208,8 @@ class WalletForm extends Component {
               Editar despesa
             </button>
           ) : <div />}
-        </form>
-      </div>
+        </Box>
+      </Box>
     );
   }
 }

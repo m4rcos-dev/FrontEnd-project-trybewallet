@@ -11,6 +11,7 @@ class Header extends Component {
         sx={ {
           display: 'flex',
           justifyContent: 'space-around',
+          height: '15vh',
         } }
       >
         <TitleLogo />
