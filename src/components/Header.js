@@ -11,6 +11,7 @@ class Header extends Component {
         sx={ {
           display: 'flex',
           justifyContent: 'space-around',
+          flexWrap: 'wrap',
           height: '15vh',
         } }
       >

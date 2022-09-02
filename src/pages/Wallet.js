@@ -23,7 +23,6 @@ class Wallet extends React.Component {
           sx={ {
             minWidht: '80%',
             position: 'fixed',
-            // width: '75rem',
             boxShadow: '-4px 9px 13px ',
             borderRadius: '0.625rem',
           } }
@@ -31,6 +30,7 @@ class Wallet extends React.Component {
           <Header />
           <WalletForm />
         </Paper>
+
         <Paper
           sx={ {
             display: 'flex',
@@ -46,6 +46,7 @@ class Wallet extends React.Component {
         >
           <TableExpense />
         </Paper>
+
       </Box>
     );
   }

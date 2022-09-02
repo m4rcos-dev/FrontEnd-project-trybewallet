@@ -10,8 +10,8 @@ import {
   MenuItem,
   Select,
   TextField,
-  Stack,
   Button,
+  styled,
 } from '@mui/material';
 import {
   addEditExpense,
@@ -97,6 +97,21 @@ class WalletForm extends Component {
   };
 
   render() {
+    // =============BreakPoints==========================
+    const BoxCustom = styled(Box)(({ theme }) => ({
+      [theme.breakpoints.down('md')]: {
+        flexWrap: 'wrap',
+      },
+    }));
+
+    const TextFieldCustom = styled(TextField)(() => ({
+      margin: '0rem 0.7rem 0rem 0.7rem',
+    }));
+
+    const FormControlCustom = styled(FormControl)(() => ({
+      margin: '0rem 0.7rem 0rem 0.7rem',
+    }));
+
     const { currencies, editor } = this.props;
     const {
       value,
@@ -116,82 +131,106 @@ class WalletForm extends Component {
           p: '3rem 1rem 1rem 1rem',
         } }
       >
-        <Box>
-          <Stack
-            direction="row"
-            spacing={ 3 }
+        <BoxCustom
+          sx={ {
+            display: 'flex',
+          } }
+        >
+          <TextFieldCustom
+            fullWidth="true"
+            size="small"
+            id="filled-basic"
+            label="Valor"
+            variant="filled"
+            type="number"
+            name="value"
+            onChange={ this.handleChange }
+            value={ value }
+          />
+          <TextFieldCustom
+            fullWidth="true"
+            size="small"
+            id="filled-basic"
+            label="Breve Descrição"
+            variant="filled"
+            name="description"
+            onChange={ this.handleChange }
+            value={ description }
+          />
+          <FormControlCustom
+            variant="filled"
+            fullWidth="true"
+            size="small"
+            sx={ {
+              minWidth: 120,
+            } }
           >
-            <TextField
-              id="filled-basic"
-              label="Valor"
-              variant="filled"
-              type="number"
-              name="value"
+            <InputLabel id="select-coin-label">Moeda</InputLabel>
+            <Select
+              labelId="select-coin-label"
+              id="select-coin"
+              name="currency"
               onChange={ this.handleChange }
-              value={ value }
-            />
-            <TextField
-              id="filled-basic"
-              label="Breve Descrição"
-              variant="filled"
-              name="description"
+              value={ currency }
+            >
+              {currencies.map((currentCurrency, index) => (
+                <MenuItem
+                  key={ `${currentCurrency}${index}` }
+                  value={ currentCurrency }
+                >
+                  {currentCurrency}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControlCustom>
+          <FormControlCustom
+            fullWidth="true"
+            size="small"
+            variant="filled"
+            sx={ {
+              minWidth: 200,
+            } }
+          >
+            <InputLabel id="select-method-label">Método de pagamento</InputLabel>
+            <Select
+              labelId="select-method-label"
+              id="select-method"
+              name="method"
               onChange={ this.handleChange }
-              value={ description }
-            />
-            <FormControl variant="filled" sx={ { minWidth: 120 } }>
-              <InputLabel id="select-coin-label">Moeda</InputLabel>
-              <Select
-                labelId="select-coin-label"
-                id="select-coin"
-                name="currency"
-                onChange={ this.handleChange }
-                value={ currency }
-              >
-                {currencies.map((currentCurrency, index) => (
-                  <MenuItem
-                    key={ `${currentCurrency}${index}` }
-                    value={ currentCurrency }
-                  >
-                    {currentCurrency}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl variant="filled" sx={ { minWidth: 200 } }>
-              <InputLabel id="select-method-label">Método de pagamento</InputLabel>
-              <Select
-                labelId="select-method-label"
-                id="select-method"
-                name="method"
-                onChange={ this.handleChange }
-                value={ method }
-              >
-                <MenuItem value="Dinheiro">Dinheiro</MenuItem>
-                <MenuItem value="Cartão de crédito">Cartão de crédito</MenuItem>
-                <MenuItem value="Cartão de débito">Cartão de débito</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl variant="filled" sx={ { minWidth: 200 } }>
-              <InputLabel id="select-tag-label">Categoria</InputLabel>
-              <Select
-                labelId="select-tag-label"
-                id="select-tag"
-                name="tag"
-                onChange={ this.handleChange }
-                value={ tag }
-              >
-                <MenuItem value="Alimentação">Alimentação</MenuItem>
-                <MenuItem value="Lazer">Lazer</MenuItem>
-                <MenuItem value="Trabalho">Trabalho</MenuItem>
-                <MenuItem value="Transporte">Transporte</MenuItem>
-                <MenuItem value="Saúde">Saúde</MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
-        </Box>
+              value={ method }
+            >
+              <MenuItem value="Dinheiro">Dinheiro</MenuItem>
+              <MenuItem value="Cartão de crédito">Cartão de crédito</MenuItem>
+              <MenuItem value="Cartão de débito">Cartão de débito</MenuItem>
+            </Select>
+          </FormControlCustom>
+          <FormControlCustom
+            fullWidth="true"
+            size="small"
+            variant="filled"
+            sx={ {
+              minWidth: 200,
+            } }
+          >
+            <InputLabel id="select-tag-label">Categoria</InputLabel>
+            <Select
+              labelId="select-tag-label"
+              id="select-tag"
+              name="tag"
+              onChange={ this.handleChange }
+              value={ tag }
+            >
+              <MenuItem value="Alimentação">Alimentação</MenuItem>
+              <MenuItem value="Lazer">Lazer</MenuItem>
+              <MenuItem value="Trabalho">Trabalho</MenuItem>
+              <MenuItem value="Transporte">Transporte</MenuItem>
+              <MenuItem value="Saúde">Saúde</MenuItem>
+            </Select>
+          </FormControlCustom>
+        </BoxCustom>
         <Box
           sx={ {
-            width: '20%',
+            width: '30%',
             p: '2rem 0rem 1rem 0rem',
           } }
         >
