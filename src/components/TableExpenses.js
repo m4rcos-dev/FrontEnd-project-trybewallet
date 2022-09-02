@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Box,
   IconButton,
-  Paper,
   styled,
   Table,
   TableBody,
   TableCell,
   tableCellClasses,
-  TableContainer,
   TableHead,
   TableRow } from '@mui/material';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -74,56 +72,54 @@ class TableExpenses extends Component {
     const { expenses } = this.props;
     return (
       <Box>
-        <TableContainer component={ Paper }>
-          <Table
-            sx={ { minWidth: '70rem', maxWidth: '70rem' } }
-            aria-label="expenses table"
-          >
-            <TableHead>
+        <Table
+          sx={ { minWidth: '70rem', maxWidth: '70rem', zIndex: 'modal' } }
+          aria-label="expenses table"
+        >
+          <TableHead sx={ {} }>
+            <StyledTableRow>
+              <StyledTableCell>Descrição</StyledTableCell>
+              <StyledTableCell>Tag</StyledTableCell>
+              <StyledTableCell>Método de pagamento</StyledTableCell>
+              <StyledTableCell>Valor</StyledTableCell>
+              <StyledTableCell>Moeda</StyledTableCell>
+              <StyledTableCell>Câmbio utilizado</StyledTableCell>
+              <StyledTableCell>Valor convertido</StyledTableCell>
+              <StyledTableCell>Moeda de conversão</StyledTableCell>
+              <StyledTableCell>Editar/Excluir</StyledTableCell>
+            </StyledTableRow>
+          </TableHead>
+          {expenses.map((expense) => (
+            <TableBody key={ expense.id } sx={ {} }>
               <StyledTableRow>
-                <StyledTableCell>Descrição</StyledTableCell>
-                <StyledTableCell>Tag</StyledTableCell>
-                <StyledTableCell>Método de pagamento</StyledTableCell>
-                <StyledTableCell>Valor</StyledTableCell>
-                <StyledTableCell>Moeda</StyledTableCell>
-                <StyledTableCell>Câmbio utilizado</StyledTableCell>
-                <StyledTableCell>Valor convertido</StyledTableCell>
-                <StyledTableCell>Moeda de conversão</StyledTableCell>
-                <StyledTableCell>Editar/Excluir</StyledTableCell>
+                <TableCell>{expense.description}</TableCell>
+                <TableCell>{expense.tag}</TableCell>
+                <TableCell>{expense.method}</TableCell>
+                <TableCell>{Number(expense.value).toFixed(2)}</TableCell>
+                <TableCell>{this.currentCurrency(expense)}</TableCell>
+                <TableCell>{this.currentAsk(expense)}</TableCell>
+                <TableCell>{this.sumValue(expense)}</TableCell>
+                <TableCell>Real</TableCell>
+                <TableCell>
+                  <IconButton
+                    // color="secondary"
+                    aria-label="editar"
+                    onClick={ () => this.editExpense(expense) }
+                  >
+                    <BorderColorIcon />
+                  </IconButton>
+                  <IconButton
+                    color="error"
+                    aria-label="excluir"
+                    onClick={ () => this.removeExpense(expense) }
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </TableCell>
               </StyledTableRow>
-            </TableHead>
-            {expenses.map((expense) => (
-              <TableBody key={ expense.id }>
-                <StyledTableRow>
-                  <TableCell>{expense.description}</TableCell>
-                  <TableCell>{expense.tag}</TableCell>
-                  <TableCell>{expense.method}</TableCell>
-                  <TableCell>{Number(expense.value).toFixed(2)}</TableCell>
-                  <TableCell>{this.currentCurrency(expense)}</TableCell>
-                  <TableCell>{this.currentAsk(expense)}</TableCell>
-                  <TableCell>{this.sumValue(expense)}</TableCell>
-                  <TableCell>Real</TableCell>
-                  <TableCell>
-                    <IconButton
-                      // color="secondary"
-                      aria-label="editar"
-                      onClick={ () => this.editExpense(expense) }
-                    >
-                      <BorderColorIcon />
-                    </IconButton>
-                    <IconButton
-                      color="error"
-                      aria-label="excluir"
-                      onClick={ () => this.removeExpense(expense) }
-                    >
-                      <DeleteForeverIcon />
-                    </IconButton>
-                  </TableCell>
-                </StyledTableRow>
-              </TableBody>
-            ))}
-          </Table>
-        </TableContainer>
+            </TableBody>
+          ))}
+        </Table>
       </Box>
     );
   }

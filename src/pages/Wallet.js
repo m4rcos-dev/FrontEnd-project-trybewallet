@@ -3,20 +3,15 @@ import React from 'react';
 import Header from '../components/Header';
 import TableExpense from '../components/TableExpenses';
 import WalletForm from '../components/WalletForm';
-import Image from '../images/backgroundPages.jpg';
 
 class Wallet extends React.Component {
   render() {
     return (
       <Box
         sx={ {
-          backgroundImage: `url(${Image})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '100vh',
         } }
       >
         <Paper
@@ -25,6 +20,7 @@ class Wallet extends React.Component {
             position: 'fixed',
             boxShadow: '-4px 9px 13px ',
             borderRadius: '0.625rem',
+            zIndex: 'tooltip',
           } }
         >
           <Header />
@@ -35,6 +31,8 @@ class Wallet extends React.Component {
           sx={ {
             display: 'flex',
             justifyContent: 'center',
+            position: 'sticky',
+            top: '0',
             minwidht: '80%',
             width: '75rem',
             mt: '30vh',
