@@ -1,4 +1,4 @@
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, styled } from '@mui/material';
 import React from 'react';
 import Header from '../components/Header';
 import TableExpense from '../components/TableExpenses';
@@ -6,6 +6,13 @@ import WalletForm from '../components/WalletForm';
 
 class Wallet extends React.Component {
   render() {
+    // =============BreakPoints==========================
+    const PaperCustomBk = styled(Paper)(({ theme }) => ({
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      },
+    }));
+
     return (
       <Box
         sx={ {
@@ -27,7 +34,7 @@ class Wallet extends React.Component {
           <WalletForm />
         </Paper>
 
-        <Paper
+        <PaperCustomBk
           sx={ {
             display: 'flex',
             justifyContent: 'center',
@@ -43,7 +50,7 @@ class Wallet extends React.Component {
           } }
         >
           <TableExpense />
-        </Paper>
+        </PaperCustomBk>
 
       </Box>
     );

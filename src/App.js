@@ -18,6 +18,9 @@ export default App;
 
 // iniciando projeto
 // Mobile First /carteira
+// Corrigir erro foco em todos inputs
+// Corrir erro scroll no mobile first
+// Criar pagina detalhes
 // Criar Page NotFound
 // Criar Loading Chamar API
 // Corrigir Erros Inputs tela de Login

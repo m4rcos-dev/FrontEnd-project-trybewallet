@@ -19,6 +19,7 @@ import {
   fetchCurrencyWallet,
   valueExpense,
 } from '../redux/actions';
+import TableExpenses from './TableExpenses';
 
 const INITIAL_STATE = {
   value: '',
@@ -110,6 +111,12 @@ class WalletForm extends Component {
 
     const FormControlCustom = styled(FormControl)(() => ({
       margin: '0rem 0.7rem 0rem 0.7rem',
+    }));
+
+    const BoxCustomTable = styled(Box)(({ theme }) => ({
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
     }));
 
     const { currencies, editor } = this.props;
@@ -264,6 +271,9 @@ class WalletForm extends Component {
             </Button>
           ) : ''}
         </Box>
+        <BoxCustomTable>
+          <TableExpenses />
+        </BoxCustomTable>
       </Box>
     );
   }

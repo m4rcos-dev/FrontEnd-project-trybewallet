@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Box,
+import {
   IconButton,
   styled,
   Table,
@@ -48,6 +48,53 @@ class TableExpenses extends Component {
   };
 
   render() {
+    // =============BreakPoints==========================
+    const StyledTableCellBk = styled(TableCell)(({ theme }) => ({
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      },
+      [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.common.white,
+      },
+      [`&.${tableCellClasses.body}`]: {
+        fontSize: 20,
+      },
+    }));
+
+    const StyledTableCellDetails = styled(TableCell)(({ theme }) => ({
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+      [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.common.white,
+      },
+      [`&.${tableCellClasses.body}`]: {
+        fontSize: 20,
+      },
+    }));
+
+    const TableCellBk = styled(TableCell)(({ theme }) => ({
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      },
+    }));
+
+    const TableCellBkDetails = styled(TableCell)(({ theme }) => ({
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+    }));
+
+    const TableCustomBk = styled(Table)(({ theme }) => ({
+      [theme.breakpoints.down('md')]: {
+        minWidth: '0rem',
+        maxWidth: '0rerm',
+      },
+    }));
+
+    // ===============Style================================
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
       [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.primary.main,
@@ -62,7 +109,6 @@ class TableExpenses extends Component {
       '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.primary.main,
       },
-      // hide last border
       '&:last-child td': {
         border: 0,
         color: theme.palette.secondary.main,
@@ -71,56 +117,59 @@ class TableExpenses extends Component {
 
     const { expenses } = this.props;
     return (
-      <Box>
-        <Table
-          sx={ { minWidth: '70rem', maxWidth: '70rem', zIndex: 'modal' } }
-          aria-label="expenses table"
-        >
-          <TableHead sx={ {} }>
+      <TableCustomBk
+        sx={ {
+          minWidth: '70rem',
+          maxWidth: '70rem',
+          zIndex: 'modal',
+        } }
+        aria-label="expenses table"
+        size="small"
+      >
+        <TableHead sx={ {} }>
+          <StyledTableRow>
+            <StyledTableCell>Descrição</StyledTableCell>
+            <StyledTableCellBk>Tag</StyledTableCellBk>
+            <StyledTableCellBk>Método de pagamento</StyledTableCellBk>
+            <StyledTableCell>Valor</StyledTableCell>
+            <StyledTableCellBk>Moeda</StyledTableCellBk>
+            <StyledTableCellBk>Câmbio utilizado</StyledTableCellBk>
+            <StyledTableCellBk>Valor convertido</StyledTableCellBk>
+            <StyledTableCellDetails>Detalhes</StyledTableCellDetails>
+            <StyledTableCell>Editar/Excluir</StyledTableCell>
+          </StyledTableRow>
+        </TableHead>
+        {expenses.map((expense) => (
+          <TableBody key={ expense.id }>
             <StyledTableRow>
-              <StyledTableCell>Descrição</StyledTableCell>
-              <StyledTableCell>Tag</StyledTableCell>
-              <StyledTableCell>Método de pagamento</StyledTableCell>
-              <StyledTableCell>Valor</StyledTableCell>
-              <StyledTableCell>Moeda</StyledTableCell>
-              <StyledTableCell>Câmbio utilizado</StyledTableCell>
-              <StyledTableCell>Valor convertido</StyledTableCell>
-              <StyledTableCell>Moeda de conversão</StyledTableCell>
-              <StyledTableCell>Editar/Excluir</StyledTableCell>
+              <TableCell>{expense.description}</TableCell>
+              <TableCellBk>{expense.tag}</TableCellBk>
+              <TableCellBk>{expense.method}</TableCellBk>
+              <TableCell>{Number(expense.value).toFixed(2)}</TableCell>
+              <TableCellBk>{this.currentCurrency(expense)}</TableCellBk>
+              <TableCellBk>{this.currentAsk(expense)}</TableCellBk>
+              <TableCellBk>{this.sumValue(expense)}</TableCellBk>
+              <TableCellBkDetails>Detalhes</TableCellBkDetails>
+              <TableCell>
+                <IconButton
+                  // color="secondary"
+                  aria-label="editar"
+                  onClick={ () => this.editExpense(expense) }
+                >
+                  <BorderColorIcon />
+                </IconButton>
+                <IconButton
+                  color="error"
+                  aria-label="excluir"
+                  onClick={ () => this.removeExpense(expense) }
+                >
+                  <DeleteForeverIcon />
+                </IconButton>
+              </TableCell>
             </StyledTableRow>
-          </TableHead>
-          {expenses.map((expense) => (
-            <TableBody key={ expense.id } sx={ {} }>
-              <StyledTableRow>
-                <TableCell>{expense.description}</TableCell>
-                <TableCell>{expense.tag}</TableCell>
-                <TableCell>{expense.method}</TableCell>
-                <TableCell>{Number(expense.value).toFixed(2)}</TableCell>
-                <TableCell>{this.currentCurrency(expense)}</TableCell>
-                <TableCell>{this.currentAsk(expense)}</TableCell>
-                <TableCell>{this.sumValue(expense)}</TableCell>
-                <TableCell>Real</TableCell>
-                <TableCell>
-                  <IconButton
-                    // color="secondary"
-                    aria-label="editar"
-                    onClick={ () => this.editExpense(expense) }
-                  >
-                    <BorderColorIcon />
-                  </IconButton>
-                  <IconButton
-                    color="error"
-                    aria-label="excluir"
-                    onClick={ () => this.removeExpense(expense) }
-                  >
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </TableCell>
-              </StyledTableRow>
-            </TableBody>
-          ))}
-        </Table>
-      </Box>
+          </TableBody>
+        ))}
+      </TableCustomBk>
     );
   }
 }
