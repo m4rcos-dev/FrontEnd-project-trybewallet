@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Box,
   Button,
+  IconButton,
+  InputAdornment,
   Paper,
   Stack,
   styled,
   TextField,
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { userEmail } from '../redux/actions';
 import TitleLogo from '../components/TitleLogo';
 
@@ -21,6 +24,9 @@ class Login extends React.Component {
       isDisable: true,
       emailValid: false,
       passwordValid: false,
+      inputEmail: false,
+      inputPassword: false,
+      passwordVisible: false,
     };
   }
 
@@ -36,9 +42,11 @@ class Login extends React.Component {
   };
 
   handleChange = ({ target }) => {
-    const { name } = target;
-
-    this.setState({ [name]: target.value }, () => {
+    const { name, id } = target;
+    this.setState({
+      [name]: target.value,
+      inputEmail: false,
+      inputPassword: false }, () => {
       const { email, password } = this.state;
       const validEmail = this.validEmail(email);
       const validPassword = this.validPassword(password);
@@ -47,6 +55,7 @@ class Login extends React.Component {
         isDisable: !validAll,
         emailValid: !validEmail,
         passwordValid: !validPassword,
+        [id]: true,
       });
     });
   };
@@ -57,6 +66,11 @@ class Login extends React.Component {
     const { email } = this.state;
     dispatch(userEmail(email));
     history.push('/carteira');
+  };
+
+  handleClickShowPassword = () => {
+    const { passwordVisible } = this.state;
+    this.setState({ passwordVisible: !passwordVisible });
   };
 
   render() {
@@ -74,7 +88,15 @@ class Login extends React.Component {
       },
     }));
 
-    const { email, password, isDisable, emailValid, passwordValid } = this.state;
+    const {
+      email,
+      password,
+      isDisable,
+      emailValid,
+      passwordValid,
+      inputEmail,
+      inputPassword,
+      passwordVisible } = this.state;
     return (
       <Box
         sx={ {
@@ -111,27 +133,44 @@ class Login extends React.Component {
                 sx={ {
                   width: '100%',
                 } }
+                required
+                autoFocus={ inputEmail }
                 error={ emailValid }
-                id="outlined-error"
+                id="inputEmail"
                 label="Email"
                 name="email"
-                value={ email }
                 onChange={ (event) => this.handleChange(event) }
+                value={ email }
               />
 
               <TextField
                 sx={ {
                   width: '100%',
                 } }
+                required
+                autoFocus={ inputPassword }
                 error={ passwordValid }
-                id="outlined-password-input"
+                id="inputPassword"
                 label="Senha"
                 name="password"
-                type="password"
+                type={ passwordVisible ? 'text' : 'password' }
                 value={ password }
                 onChange={ this.handleChange }
+                InputProps={ {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={ this.handleClickShowPassword }
+                        // onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                } }
               />
-
               <Button
                 sx={ {
                   width: '100%',
