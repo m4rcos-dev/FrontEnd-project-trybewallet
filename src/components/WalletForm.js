@@ -28,6 +28,8 @@ const INITIAL_STATE = {
   method: 'Dinheiro',
   tag: 'Alimentação',
   exchangeRates: [],
+  inputValueFocus: false,
+  inputDescriptionFocus: false,
 };
 
 class WalletForm extends Component {
@@ -41,6 +43,8 @@ class WalletForm extends Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: [],
+      inputValueFocus: false,
+      inputDescriptionFocus: false,
     };
   }
 
@@ -50,8 +54,13 @@ class WalletForm extends Component {
   }
 
   handleChange = ({ target }) => {
-    const { name } = target;
-    this.setState({ [name]: target.value });
+    const { name, id } = target;
+    this.setState({
+      [name]: target.value,
+      inputDescriptionFocus: false,
+      inputValueFocus: false }, () => {
+      this.setState({ [id]: true });
+    });
   };
 
   addExpense = async (event) => {
@@ -126,6 +135,8 @@ class WalletForm extends Component {
       currency,
       method,
       tag,
+      inputDescriptionFocus,
+      inputValueFocus,
     } = this.state;
     return (
       <Box
@@ -146,21 +157,23 @@ class WalletForm extends Component {
           <TextFieldCustom
             fullWidth="true"
             size="small"
-            id="filled-basic"
+            id="inputValueFocus"
             label="Valor"
             variant="filled"
             type="number"
             name="value"
+            autoFocus={ inputValueFocus }
             onChange={ this.handleChange }
             value={ value }
           />
           <TextFieldCustom
             fullWidth="true"
             size="small"
-            id="filled-basic"
+            id="inputDescriptionFocus"
             label="Breve Descrição"
             variant="filled"
             name="description"
+            autoFocus={ inputDescriptionFocus }
             onChange={ this.handleChange }
             value={ description }
           />

@@ -27,7 +27,7 @@ class Wallet extends React.Component {
             position: 'fixed',
             boxShadow: '-4px 9px 13px ',
             borderRadius: '0.625rem',
-            zIndex: 'tooltip',
+            zIndex: 'modal',
           } }
         >
           <Header />
@@ -51,7 +51,6 @@ class Wallet extends React.Component {
         >
           <TableExpense />
         </PaperCustomBk>
-
       </Box>
     );
   }

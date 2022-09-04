@@ -121,7 +121,6 @@ class TableExpenses extends Component {
         sx={ {
           minWidth: '70rem',
           maxWidth: '70rem',
-          zIndex: 'modal',
         } }
         aria-label="expenses table"
         size="small"

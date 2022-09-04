@@ -24,8 +24,8 @@ class Login extends React.Component {
       isDisable: true,
       emailValid: false,
       passwordValid: false,
-      inputEmail: false,
-      inputPassword: false,
+      inputEmailFocus: false,
+      inputPasswordFocus: false,
       passwordVisible: false,
     };
   }
@@ -45,8 +45,8 @@ class Login extends React.Component {
     const { name, id } = target;
     this.setState({
       [name]: target.value,
-      inputEmail: false,
-      inputPassword: false }, () => {
+      inputEmailFocus: false,
+      inputPasswordFocus: false }, () => {
       const { email, password } = this.state;
       const validEmail = this.validEmail(email);
       const validPassword = this.validPassword(password);
@@ -94,8 +94,8 @@ class Login extends React.Component {
       isDisable,
       emailValid,
       passwordValid,
-      inputEmail,
-      inputPassword,
+      inputEmailFocus: inputEmail,
+      inputPasswordFocus: inputPassword,
       passwordVisible } = this.state;
     return (
       <Box
