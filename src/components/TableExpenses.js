@@ -28,6 +28,7 @@ class TableExpenses extends Component {
     super();
     this.state = {
       open: false,
+      openDelete: false,
     };
   }
 
@@ -55,6 +56,7 @@ class TableExpenses extends Component {
     const currentExpenses = expenses
       .filter((currentExpense) => currentExpense.id !== expense.id);
     dispatch(deleteExpense(currentExpenses));
+    this.handleDeleteAlert();
   };
 
   editExpense = (expense) => {
@@ -67,8 +69,13 @@ class TableExpenses extends Component {
     this.setState({ open: !open });
   };
 
+  handleDeleteAlert = () => {
+    const { openDelete } = this.state;
+    this.setState({ openDelete: !openDelete });
+  };
+
   render() {
-    const { open } = this.state;
+    const { open, openDelete } = this.state;
     // =============BreakPoints==========================
     const StyledTableCellBk = styled(TableCell)(({ theme }) => ({
       [theme.breakpoints.down('md')]: {
@@ -288,7 +295,6 @@ class TableExpenses extends Component {
               </TableCellBkDetails>
               <TableCell>
                 <IconButton
-                  // color="secondary"
                   aria-label="editar"
                   onClick={ () => this.editExpense(expense) }
                 >
@@ -297,10 +303,36 @@ class TableExpenses extends Component {
                 <IconButton
                   color="error"
                   aria-label="excluir"
-                  onClick={ () => this.removeExpense(expense) }
+                  // onClick={ () => this.removeExpense(expense) }
+                  onClick={ this.handleDeleteAlert }
                 >
                   <DeleteForeverIcon />
                 </IconButton>
+                <Dialog
+                  open={ openDelete }
+                  onClose={ this.handleDeleteAlert }
+                  aria-labelledby="alerta excluir despesa"
+                  aria-describedby="alerta excluir despesa"
+                >
+                  <DialogTitle id="alert-delete-title">
+                    Atenção
+                  </DialogTitle>
+                  <DialogContent>
+                    {`Deseja ralmente exlcuir: "${expense.description}"`}
+                    <DialogActions>
+                      <Button
+                        onClick={ this.handleDeleteAlert }
+                      >
+                        Não
+                      </Button>
+                      <Button
+                        onClick={ () => this.removeExpense(expense) }
+                      >
+                        Sim
+                      </Button>
+                    </DialogActions>
+                  </DialogContent>
+                </Dialog>
               </TableCell>
             </StyledTableRow>
           </TableBody>

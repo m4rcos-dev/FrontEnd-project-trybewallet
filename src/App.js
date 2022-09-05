@@ -25,8 +25,8 @@ export default App;
 // Criar pagina detalhes ok
 
 // Corrigir Erros Inputs tela de Login ok
-// Cria aleta exluir despesa
+// Cria aleta exluir despesa ok
 // Criar snackbar de adiconado, editado e excluido com sucesso
 // Criar Page NotFound
 // Criar Loading Chamar API
-// Validação Inputs Expenses
+// Validação Inputs Expenses ok
