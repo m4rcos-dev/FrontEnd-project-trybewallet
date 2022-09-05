@@ -12,6 +12,8 @@ import {
   TextField,
   Button,
   styled,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import {
   addEditExpense,
@@ -31,6 +33,7 @@ const INITIAL_STATE = {
   inputValueFocus: false,
   inputDescriptionFocus: false,
   buttonDisable: true,
+  // alertAddExpense: false,
 };
 
 class WalletForm extends Component {
@@ -47,6 +50,7 @@ class WalletForm extends Component {
       inputValueFocus: false,
       inputDescriptionFocus: false,
       buttonDisable: true,
+      alertAddExpense: false,
     };
   }
 
@@ -78,13 +82,16 @@ class WalletForm extends Component {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
     delete data.USDT;
-    this.setState({ exchangeRates: data }, () => {
+    this.setState({ exchangeRates: data, alertAddExpense: false }, () => {
+      const { alertAddExpense } = this.state;
       const { dispatch } = this.props;
       dispatch(valueExpense(this.state));
-      this.setState((previousState) => ({
-        id: previousState.id + 1,
-        ...INITIAL_STATE,
-      }));
+      this.setState({ alertAddExpense: !alertAddExpense }, () => {
+        this.setState((previousState) => ({
+          id: previousState.id + 1,
+          ...INITIAL_STATE,
+        }));
+      });
     });
   };
 
@@ -94,7 +101,7 @@ class WalletForm extends Component {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
     delete data.USDT;
-    this.setState({ exchangeRates: data, id: idToEdit }, () => {
+    this.setState({ exchangeRates: data, id: idToEdit, alertAddExpense: false }, () => {
       const currentIndex = expenses.findIndex((expense) => expense.id === idToEdit);
       const removeExpense = expenses
         .filter((currentExpense) => currentExpense.id !== idToEdit);
@@ -107,13 +114,20 @@ class WalletForm extends Component {
         return true;
       });
       const { dispatch } = this.props;
+      const { alertAddExpense } = this.state;
       dispatch(addEditExpense(newExpenseSort));
       dispatch(editExpense(0, false));
-      this.setState((previousState) => ({
-        id: previousState,
-        ...INITIAL_STATE,
-      }));
+      this.setState({ alertAddExpense: !alertAddExpense }, () => {
+        this.setState((previousState) => ({
+          id: previousState,
+          ...INITIAL_STATE,
+        }));
+      });
     });
+  };
+
+  handleCloseAlertAdd = () => {
+    this.setState({ alertAddExpense: false });
   };
 
   render() {
@@ -148,6 +162,7 @@ class WalletForm extends Component {
       inputDescriptionFocus,
       inputValueFocus,
       buttonDisable,
+      alertAddExpense,
     } = this.state;
     return (
       <Box
@@ -259,14 +274,14 @@ class WalletForm extends Component {
             </Select>
           </FormControlCustom>
         </BoxCustom>
-        <Box
-          sx={ {
-            width: '30%',
-            p: '2rem 0rem 1rem 0rem',
-          } }
-        >
-          {editor
-            ? '' : (
+        {editor
+          ? '' : (
+            <Box
+              sx={ {
+                width: '30%',
+                p: '2rem 0rem 1rem 0rem',
+              } }
+            >
               <Button
                 sx={ {
                   width: '100%',
@@ -280,8 +295,28 @@ class WalletForm extends Component {
               >
                 Adicionar despesa
               </Button>
-            )}
-          {editor ? (
+              <Snackbar
+                open={ alertAddExpense }
+                autoHideDuration={ 6000 }
+                onClose={ this.handleCloseAlertAdd }
+              >
+                <Alert
+                  // onClose={ this.handleCloseAlertAdd }
+                  severity="success"
+                  sx={ { width: '100%' } }
+                >
+                  Despesa adicionada!
+                </Alert>
+              </Snackbar>
+            </Box>
+          )}
+        {editor ? (
+          <Box
+            sx={ {
+              width: '30%',
+              p: '2rem 0rem 1rem 0rem',
+            } }
+          >
             <Button
               sx={ {
                 width: '100%',
@@ -295,8 +330,21 @@ class WalletForm extends Component {
             >
               Editar despesa
             </Button>
-          ) : ''}
-        </Box>
+            <Snackbar
+              open={ alertAddExpense }
+              autoHideDuration={ 6000 }
+              onClose={ this.handleCloseAlertAdd }
+            >
+              <Alert
+                // onClose={ this.handleCloseAlertAdd }
+                severity="success"
+                sx={ { width: '100%' } }
+              >
+                Despesa editada!
+              </Alert>
+            </Snackbar>
+          </Box>
+        ) : ''}
         <BoxCustomTable>
           <TableExpenses />
         </BoxCustomTable>
