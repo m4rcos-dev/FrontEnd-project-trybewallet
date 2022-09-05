@@ -94,8 +94,8 @@ class Login extends React.Component {
       isDisable,
       emailValid,
       passwordValid,
-      inputEmailFocus: inputEmail,
-      inputPasswordFocus: inputPassword,
+      inputEmailFocus,
+      inputPasswordFocus,
       passwordVisible } = this.state;
     return (
       <Box
@@ -134,9 +134,9 @@ class Login extends React.Component {
                   width: '100%',
                 } }
                 required
-                autoFocus={ inputEmail }
+                autoFocus={ inputEmailFocus }
                 error={ emailValid }
-                id="inputEmail"
+                id="inputEmailFocus"
                 label="Email"
                 name="email"
                 onChange={ (event) => this.handleChange(event) }
@@ -148,9 +148,9 @@ class Login extends React.Component {
                   width: '100%',
                 } }
                 required
-                autoFocus={ inputPassword }
+                autoFocus={ inputPasswordFocus }
                 error={ passwordValid }
-                id="inputPassword"
+                id="inputPasswordFocus"
                 label="Senha"
                 name="password"
                 type={ passwordVisible ? 'text' : 'password' }

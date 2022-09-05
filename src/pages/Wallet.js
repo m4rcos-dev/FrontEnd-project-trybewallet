@@ -7,9 +7,15 @@ import WalletForm from '../components/WalletForm';
 class Wallet extends React.Component {
   render() {
     // =============BreakPoints==========================
-    const PaperCustomBk = styled(Paper)(({ theme }) => ({
+    const PaperCustomTableBk = styled(Paper)(({ theme }) => ({
       [theme.breakpoints.down('md')]: {
         display: 'none',
+      },
+    }));
+
+    const PaperCustomWalletFormBk = styled(Paper)(({ theme }) => ({
+      [theme.breakpoints.down('md')]: {
+        position: 'absolute',
       },
     }));
 
@@ -21,7 +27,7 @@ class Wallet extends React.Component {
           alignItems: 'center',
         } }
       >
-        <Paper
+        <PaperCustomWalletFormBk
           sx={ {
             minWidht: '80%',
             position: 'fixed',
@@ -32,9 +38,9 @@ class Wallet extends React.Component {
         >
           <Header />
           <WalletForm />
-        </Paper>
+        </PaperCustomWalletFormBk>
 
-        <PaperCustomBk
+        <PaperCustomTableBk
           sx={ {
             display: 'flex',
             justifyContent: 'center',
@@ -50,7 +56,7 @@ class Wallet extends React.Component {
           } }
         >
           <TableExpense />
-        </PaperCustomBk>
+        </PaperCustomTableBk>
       </Box>
     );
   }

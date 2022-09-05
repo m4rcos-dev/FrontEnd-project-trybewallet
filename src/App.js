@@ -16,12 +16,16 @@ function App() {
 
 export default App;
 
-// iniciando projeto
 // Mobile First /carteira
-// Corrigir erro foco em todos inputs
-// Corrir erro scroll no mobile first
+
+// Corrigir erro foco em todos inputs ok
+// Corrir erro scroll no mobile ok
+// Corrigir erro foco em todos inputs mobile
 // Criar pagina detalhes
+
+// Corrigir Erros Inputs tela de Login ok
+// Cria aleta exluir despesa
+// Criar snackbar de adiconado, editado e excluido com sucesso
 // Criar Page NotFound
 // Criar Loading Chamar API
-// Corrigir Erros Inputs tela de Login
 // Validação Inputs Expenses
