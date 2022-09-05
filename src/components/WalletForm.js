@@ -24,12 +24,13 @@ import TableExpenses from './TableExpenses';
 const INITIAL_STATE = {
   value: '',
   description: '',
-  currency: 'USD',
-  method: 'Dinheiro',
-  tag: 'Alimentação',
+  currency: '',
+  method: '',
+  tag: '',
   exchangeRates: [],
   inputValueFocus: false,
   inputDescriptionFocus: false,
+  buttonDisable: true,
 };
 
 class WalletForm extends Component {
@@ -39,12 +40,13 @@ class WalletForm extends Component {
       id: 0,
       value: '',
       description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
+      currency: '',
+      method: '',
+      tag: '',
       exchangeRates: [],
       inputValueFocus: false,
       inputDescriptionFocus: false,
+      buttonDisable: true,
     };
   }
 
@@ -59,7 +61,15 @@ class WalletForm extends Component {
       [name]: target.value,
       inputDescriptionFocus: false,
       inputValueFocus: false }, () => {
-      this.setState({ [id]: true });
+      this.setState({ [id]: true }, () => {
+        const { value, description, currency, method, tag } = this.state;
+        const validButton = value.length > 0
+        && description.length > 0
+        && currency.length > 0
+        && method.length > 0
+        && tag.length > 0;
+        this.setState({ buttonDisable: !validButton });
+      });
     });
   };
 
@@ -137,6 +147,7 @@ class WalletForm extends Component {
       tag,
       inputDescriptionFocus,
       inputValueFocus,
+      buttonDisable,
     } = this.state;
     return (
       <Box
@@ -187,7 +198,7 @@ class WalletForm extends Component {
           >
             <InputLabel id="select-coin-label">Moeda</InputLabel>
             <Select
-              labelId="select-coin-label"
+              labelId="select-coin"
               id="select-coin"
               name="currency"
               onChange={ this.handleChange }
@@ -213,7 +224,7 @@ class WalletForm extends Component {
           >
             <InputLabel id="select-method-label">Método de pagamento</InputLabel>
             <Select
-              labelId="select-method-label"
+              labelId="select-method"
               id="select-method"
               name="method"
               onChange={ this.handleChange }
@@ -265,6 +276,7 @@ class WalletForm extends Component {
                 color="secondary"
                 variant="contained"
                 onClick={ this.addExpense }
+                disabled={ buttonDisable }
               >
                 Adicionar despesa
               </Button>
@@ -279,6 +291,7 @@ class WalletForm extends Component {
               color="secondary"
               variant="contained"
               onClick={ this.addEditExpense }
+              disabled={ buttonDisable }
             >
               Editar despesa
             </Button>

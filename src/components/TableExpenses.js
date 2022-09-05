@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   styled,
@@ -28,7 +28,6 @@ class TableExpenses extends Component {
     super();
     this.state = {
       open: false,
-      close: false,
     };
   }
 
@@ -64,15 +63,12 @@ class TableExpenses extends Component {
   };
 
   handleDetailsAlert = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
+    const { open } = this.state;
+    this.setState({ open: !open });
   };
 
   render() {
-    const { open, close } = this.state;
+    const { open } = this.state;
     // =============BreakPoints==========================
     const StyledTableCellBk = styled(TableCell)(({ theme }) => ({
       [theme.breakpoints.down('md')]: {
@@ -175,7 +171,6 @@ class TableExpenses extends Component {
               <TableCellBk>{this.sumValue(expense)}</TableCellBk>
               <TableCellBkDetails>
                 <Button
-                  variant="text"
                   color="secondary"
                   onClick={ this.handleDetailsAlert }
                 >
@@ -183,7 +178,7 @@ class TableExpenses extends Component {
                 </Button>
                 <Dialog
                   open={ open }
-                  onClose={ close }
+                  onClose={ this.handleDetailsAlert }
                   aria-labelledby="detalhes da despesa"
                   aria-describedby="detalhes da despesa"
                 >
@@ -191,80 +186,102 @@ class TableExpenses extends Component {
                     {expense.description}
                   </DialogTitle>
                   <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <Box
+                      sx={ {
+                        display: 'flex',
+                        alignItems: 'center',
+                      } }
+                    >
                       <Typography
-                        variant="subtitle1"
                         sx={ { fontWeight: 'bolder',
-                          display: 'flex',
-                          alignItems: 'center' } }
+                          fontSize: '1rem' } }
                       >
                         Tag:
-                        <Typography
-                          variant="subtitle2"
-                          sx={ { ml: '0.5rem' } }
-                        >
-                          {expense.tag}
-                        </Typography>
                       </Typography>
                       <Typography
-                        variant="subtitle1"
+                        sx={ { ml: '0.5rem', fontSize: '1rem' } }
+                      >
+                        {expense.tag}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={ {
+                        display: 'flex',
+                        alignItems: 'center',
+                      } }
+                    >
+                      <Typography
                         sx={ { fontWeight: 'bolder',
-                          display: 'flex',
-                          alignItems: 'center' } }
+                          fontSize: '1rem' } }
                       >
                         Método de pagamento:
-                        <Typography
-                          variant="subtitle2"
-                          sx={ { ml: '0.5rem' } }
-                        >
-                          {expense.method}
-                        </Typography>
                       </Typography>
                       <Typography
-                        variant="subtitle1"
+                        sx={ { ml: '0.5rem', fontSize: '1rem' } }
+                      >
+                        {expense.method}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={ {
+                        display: 'flex',
+                        alignItems: 'center',
+                      } }
+                    >
+                      <Typography
                         sx={ { fontWeight: 'bolder',
-                          display: 'flex',
-                          alignItems: 'center' } }
+                          fontSize: '1rem' } }
                       >
                         Moeda:
-                        <Typography
-                          variant="subtitle2"
-                          sx={ { ml: '0.5rem' } }
-                        >
-                          {this.currentCurrency(expense)}
-                        </Typography>
                       </Typography>
                       <Typography
-                        variant="subtitle1"
+                        sx={ { ml: '0.5rem', fontSize: '1rem' } }
+                      >
+                        {this.currentCurrency(expense)}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={ {
+                        display: 'flex',
+                        alignItems: 'center',
+                      } }
+                    >
+                      <Typography
                         sx={ { fontWeight: 'bolder',
-                          display: 'flex',
-                          alignItems: 'center' } }
+                          fontSize: '1rem' } }
                       >
                         Câmbio utilizado:
-                        <Typography
-                          variant="subtitle2"
-                          sx={ { ml: '0.5rem' } }
-                        >
-                          {this.currentAsk(expense)}
-                        </Typography>
                       </Typography>
                       <Typography
-                        variant="subtitle1"
+                        sx={ { ml: '0.5rem', fontSize: '1rem' } }
+                      >
+                        {this.currentAsk(expense)}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={ {
+                        display: 'flex',
+                        alignItems: 'center',
+                      } }
+                    >
+                      <Typography
                         sx={ { fontWeight: 'bolder',
-                          display: 'flex',
-                          alignItems: 'center' } }
+                          fontSize: 'rerm' } }
                       >
                         Valor convertido:
-                        <Typography
-                          variant="subtitle2"
-                          sx={ { ml: '0.5rem' } }
-                        >
-                          {this.sumValue(expense)}
-                        </Typography>
                       </Typography>
-                    </DialogContentText>
+                      <Typography
+                        sx={ { ml: '0.5rem', fontSize: '1rem' } }
+                      >
+                        {this.sumValue(expense)}
+                      </Typography>
+                    </Box>
                     <DialogActions>
-                      <Button onClick={ this.handleClose }>Fechar</Button>
+                      <Button
+                        onClick={ this.handleDetailsAlert }
+                      >
+                        Fechar
+                      </Button>
                     </DialogActions>
                   </DialogContent>
                 </Dialog>

@@ -18,6 +18,7 @@ export default App;
 
 // Mobile First /carteira
 
+// Corrigir erros console ok
 // Corrigir erro foco em todos inputs ok
 // Corrir erro scroll no mobile ok
 // Corrigir erro foco em todos inputs mobile
