@@ -155,7 +155,7 @@ class WalletForm extends Component {
           } }
         >
           <TextFieldCustom
-            fullWidth="true"
+            fullWidth
             size="small"
             id="inputValueFocus"
             label="Valor"
@@ -167,7 +167,7 @@ class WalletForm extends Component {
             value={ value }
           />
           <TextFieldCustom
-            fullWidth="true"
+            fullWidth
             size="small"
             id="inputDescriptionFocus"
             label="Breve Descrição"
@@ -179,7 +179,7 @@ class WalletForm extends Component {
           />
           <FormControlCustom
             variant="filled"
-            fullWidth="true"
+            fullWidth
             size="small"
             sx={ {
               minWidth: 120,
@@ -204,7 +204,7 @@ class WalletForm extends Component {
             </Select>
           </FormControlCustom>
           <FormControlCustom
-            fullWidth="true"
+            fullWidth
             size="small"
             variant="filled"
             sx={ {
@@ -225,7 +225,7 @@ class WalletForm extends Component {
             </Select>
           </FormControlCustom>
           <FormControlCustom
-            fullWidth="true"
+            fullWidth
             size="small"
             variant="filled"
             sx={ {

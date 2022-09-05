@@ -21,7 +21,7 @@ export default App;
 // Corrigir erro foco em todos inputs ok
 // Corrir erro scroll no mobile ok
 // Corrigir erro foco em todos inputs mobile
-// Criar pagina detalhes
+// Criar pagina detalhes ok
 
 // Corrigir Erros Inputs tela de Login ok
 // Cria aleta exluir despesa

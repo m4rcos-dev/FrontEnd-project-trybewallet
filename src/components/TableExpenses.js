@@ -1,8 +1,15 @@
+/* eslint-disable max-lines */
 /* eslint-disable react/jsx-max-depth */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   IconButton,
   styled,
   Table,
@@ -10,12 +17,21 @@ import {
   TableCell,
   tableCellClasses,
   TableHead,
-  TableRow } from '@mui/material';
+  TableRow,
+  Typography } from '@mui/material';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { deleteExpense, editExpense } from '../redux/actions';
 
 class TableExpenses extends Component {
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+      close: false,
+    };
+  }
+
   currentCurrency = (expense) => {
     const { currency, exchangeRates } = expense;
     const currentCurrency = exchangeRates[currency].name;
@@ -47,7 +63,16 @@ class TableExpenses extends Component {
     dispatch(editExpense(expense.id, true));
   };
 
+  handleDetailsAlert = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
+    const { open, close } = this.state;
     // =============BreakPoints==========================
     const StyledTableCellBk = styled(TableCell)(({ theme }) => ({
       [theme.breakpoints.down('md')]: {
@@ -148,7 +173,102 @@ class TableExpenses extends Component {
               <TableCellBk>{this.currentCurrency(expense)}</TableCellBk>
               <TableCellBk>{this.currentAsk(expense)}</TableCellBk>
               <TableCellBk>{this.sumValue(expense)}</TableCellBk>
-              <TableCellBkDetails>Detalhes</TableCellBkDetails>
+              <TableCellBkDetails>
+                <Button
+                  variant="text"
+                  color="secondary"
+                  onClick={ this.handleDetailsAlert }
+                >
+                  Detalhes
+                </Button>
+                <Dialog
+                  open={ open }
+                  onClose={ close }
+                  aria-labelledby="detalhes da despesa"
+                  aria-describedby="detalhes da despesa"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {expense.description}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      <Typography
+                        variant="subtitle1"
+                        sx={ { fontWeight: 'bolder',
+                          display: 'flex',
+                          alignItems: 'center' } }
+                      >
+                        Tag:
+                        <Typography
+                          variant="subtitle2"
+                          sx={ { ml: '0.5rem' } }
+                        >
+                          {expense.tag}
+                        </Typography>
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        sx={ { fontWeight: 'bolder',
+                          display: 'flex',
+                          alignItems: 'center' } }
+                      >
+                        Método de pagamento:
+                        <Typography
+                          variant="subtitle2"
+                          sx={ { ml: '0.5rem' } }
+                        >
+                          {expense.method}
+                        </Typography>
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        sx={ { fontWeight: 'bolder',
+                          display: 'flex',
+                          alignItems: 'center' } }
+                      >
+                        Moeda:
+                        <Typography
+                          variant="subtitle2"
+                          sx={ { ml: '0.5rem' } }
+                        >
+                          {this.currentCurrency(expense)}
+                        </Typography>
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        sx={ { fontWeight: 'bolder',
+                          display: 'flex',
+                          alignItems: 'center' } }
+                      >
+                        Câmbio utilizado:
+                        <Typography
+                          variant="subtitle2"
+                          sx={ { ml: '0.5rem' } }
+                        >
+                          {this.currentAsk(expense)}
+                        </Typography>
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        sx={ { fontWeight: 'bolder',
+                          display: 'flex',
+                          alignItems: 'center' } }
+                      >
+                        Valor convertido:
+                        <Typography
+                          variant="subtitle2"
+                          sx={ { ml: '0.5rem' } }
+                        >
+                          {this.sumValue(expense)}
+                        </Typography>
+                      </Typography>
+                    </DialogContentText>
+                    <DialogActions>
+                      <Button onClick={ this.handleClose }>Fechar</Button>
+                    </DialogActions>
+                  </DialogContent>
+                </Dialog>
+              </TableCellBkDetails>
               <TableCell>
                 <IconButton
                   // color="secondary"
