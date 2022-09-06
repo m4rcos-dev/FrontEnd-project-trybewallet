@@ -18,6 +18,7 @@ import {
 import {
   addEditExpense,
   editExpense,
+  editForm,
   fetchCurrencyWallet,
   valueExpense,
 } from '../redux/actions';
@@ -61,6 +62,8 @@ class WalletForm extends Component {
 
   handleChange = ({ target }) => {
     const { name, id } = target;
+    const { dispatch, objToEdit } = this.props;
+    dispatch(editForm(false, objToEdit));
     this.setState({
       [name]: target.value,
       inputDescriptionFocus: false,
@@ -163,7 +166,7 @@ class WalletForm extends Component {
       },
     }));
 
-    const { currencies, editor } = this.props;
+    const { currencies, editor, objToEdit, formEditor } = this.props;
     const {
       value,
       description,
@@ -201,7 +204,7 @@ class WalletForm extends Component {
             name="value"
             autoFocus={ inputValueFocus }
             onChange={ this.handleChange }
-            value={ value }
+            value={ formEditor ? objToEdit.value : value }
           />
           <TextFieldCustom
             fullWidth
@@ -212,7 +215,7 @@ class WalletForm extends Component {
             name="description"
             autoFocus={ inputDescriptionFocus }
             onChange={ this.handleChange }
-            value={ description }
+            value={ formEditor ? objToEdit.description : description }
           />
           <FormControlCustom
             variant="filled"
@@ -228,7 +231,7 @@ class WalletForm extends Component {
               id="select-coin"
               name="currency"
               onChange={ this.handleChange }
-              value={ currency }
+              value={ formEditor ? objToEdit.currency : currency }
             >
               {currencies.map((currentCurrency, index) => (
                 <MenuItem
@@ -254,7 +257,7 @@ class WalletForm extends Component {
               id="select-method"
               name="method"
               onChange={ this.handleChange }
-              value={ method }
+              value={ formEditor ? objToEdit.method : method }
             >
               <MenuItem value="Dinheiro">Dinheiro</MenuItem>
               <MenuItem value="Cartão de crédito">Cartão de crédito</MenuItem>
@@ -275,7 +278,7 @@ class WalletForm extends Component {
               id="select-tag"
               name="tag"
               onChange={ this.handleChange }
-              value={ tag }
+              value={ formEditor ? objToEdit.tag : tag }
             >
               <MenuItem value="Alimentação">Alimentação</MenuItem>
               <MenuItem value="Lazer">Lazer</MenuItem>
@@ -308,7 +311,7 @@ class WalletForm extends Component {
               </Button>
               <Snackbar
                 open={ alertAddExpense }
-                autoHideDuration={ 6000 }
+                autoHideDuration={ 3000 }
                 onClose={ this.handleCloseAlertAdd }
               >
                 <Alert
@@ -343,7 +346,7 @@ class WalletForm extends Component {
             </Button>
             <Snackbar
               open={ alertAddExpense }
-              autoHideDuration={ 6000 }
+              autoHideDuration={ 3000 }
               onClose={ this.handleCloseAlertAdd }
             >
               <Alert
@@ -380,6 +383,14 @@ WalletForm.propTypes = {
       ask: PropTypes.string.isRequired,
     })).isRequired,
   })).isRequired,
+  objToEdit: PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+  }).isRequired,
+  formEditor: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

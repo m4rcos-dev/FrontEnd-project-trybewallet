@@ -23,7 +23,7 @@ import {
   Typography } from '@mui/material';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { deleteExpense, editExpense } from '../redux/actions';
+import { deleteExpense, editExpense, editForm } from '../redux/actions';
 
 class TableExpenses extends Component {
   constructor() {
@@ -67,7 +67,8 @@ class TableExpenses extends Component {
 
   editExpense = (expense) => {
     const { dispatch } = this.props;
-    dispatch(editExpense(expense.id, true, expense));
+    dispatch(editExpense(expense.id, true));
+    dispatch(editForm(true, expense));
   };
 
   handleDetailsAlert = () => {
@@ -177,7 +178,7 @@ class TableExpenses extends Component {
           </StyledTableRow>
           <Snackbar
             open={ openDeleteSucess }
-            autoHideDuration={ 6000 }
+            autoHideDuration={ 3000 }
             onClose={ this.handleDeleteSucess }
           >
             <Alert
