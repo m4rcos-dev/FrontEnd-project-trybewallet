@@ -13,7 +13,7 @@ export const valueWallet = (data) => ({ type: VALUE_WALLET, data });
 const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
 export const valueExpense = (value) => ({ type: VALUE_EXPENSE, value });
 export const deleteExpense = (arr) => ({ type: DELETE_EXPENSE, arr });
-export const editExpense = (id, isEdit) => ({ type: EDIT_EXPENSE, id, isEdit });
+export const editExpense = (id, isEdit, obj) => ({ type: EDIT_EXPENSE, id, isEdit, obj });
 export const addEditExpense = (value) => ({ type: ADD_EDIT_EXPENSE, value });
 
 export const fetchCurrencyWallet = () => async (dispatch) => {

@@ -126,6 +126,17 @@ class WalletForm extends Component {
     });
   };
 
+  // addEditInputsValues = () => {
+  //   const { objToEdit } = this.props;
+  //   this.setState({
+  //     value: objToEdit.value,
+  //     description: objToEdit.description,
+  //     currency: objToEdit.currency,
+  //     method: objToEdit.method,
+  //     tag: objToEdit.tag,
+  //   });
+  // };
+
   handleCloseAlertAdd = () => {
     this.setState({ alertAddExpense: false });
   };

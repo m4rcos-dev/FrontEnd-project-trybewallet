@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   error: '',
   editor: false, // valor booleano que indica de uma despesa está sendo editada
   idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
+  objToEdit: {},
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -51,6 +52,7 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       editor: action.isEdit,
       idToEdit: action.id,
+      objToEdit: action.obj,
     };
   case ADD_EDIT_EXPENSE:
     return {

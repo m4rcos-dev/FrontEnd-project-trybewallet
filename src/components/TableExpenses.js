@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
+  Alert,
   Box,
   Button,
   Dialog,
@@ -11,6 +12,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Snackbar,
   styled,
   Table,
   TableBody,
@@ -29,6 +31,7 @@ class TableExpenses extends Component {
     this.state = {
       open: false,
       openDelete: false,
+      openDeleteSucess: false,
     };
   }
 
@@ -52,16 +55,19 @@ class TableExpenses extends Component {
   };
 
   removeExpense = (expense) => {
-    const { expenses, dispatch } = this.props;
-    const currentExpenses = expenses
-      .filter((currentExpense) => currentExpense.id !== expense.id);
-    dispatch(deleteExpense(currentExpenses));
-    this.handleDeleteAlert();
+    this.setState({ openDelete: false }, () => {
+      const { expenses, dispatch } = this.props;
+      const currentExpenses = expenses
+        .filter((currentExpense) => currentExpense.id !== expense.id);
+      dispatch(deleteExpense(currentExpenses));
+      this.setState({ openDeleteSucess: true });
+    });
+    // this.handleDeleteAlert();
   };
 
   editExpense = (expense) => {
     const { dispatch } = this.props;
-    dispatch(editExpense(expense.id, true));
+    dispatch(editExpense(expense.id, true, expense));
   };
 
   handleDetailsAlert = () => {
@@ -74,8 +80,12 @@ class TableExpenses extends Component {
     this.setState({ openDelete: !openDelete });
   };
 
+  handleDeleteSucess = () => {
+    this.setState({ openDeleteSucess: false });
+  };
+
   render() {
-    const { open, openDelete } = this.state;
+    const { open, openDelete, openDeleteSucess } = this.state;
     // =============BreakPoints==========================
     const StyledTableCellBk = styled(TableCell)(({ theme }) => ({
       [theme.breakpoints.down('md')]: {
@@ -165,6 +175,18 @@ class TableExpenses extends Component {
             <StyledTableCellDetails>Detalhes</StyledTableCellDetails>
             <StyledTableCell>Editar/Excluir</StyledTableCell>
           </StyledTableRow>
+          <Snackbar
+            open={ openDeleteSucess }
+            autoHideDuration={ 6000 }
+            onClose={ this.handleDeleteSucess }
+          >
+            <Alert
+              severity="error"
+              sx={ { width: '100%' } }
+            >
+              Despesa deletada!
+            </Alert>
+          </Snackbar>
         </TableHead>
         {expenses.map((expense) => (
           <TableBody key={ expense.id }>
