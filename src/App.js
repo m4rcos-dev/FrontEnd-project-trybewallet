@@ -15,18 +15,3 @@ function App() {
 }
 
 export default App;
-
-// Mobile First /carteira
-
-// Corrigir erros console ok
-// Corrigir erro foco em todos inputs ok
-// Corrir erro scroll no mobile ok
-// Corrigir erro foco em todos inputs mobile
-// Criar pagina detalhes ok
-
-// Corrigir Erros Inputs tela de Login ok
-// Cria aleta exluir despesa ok
-// Criar snackbar de adiconado, editado e excluido com sucesso
-// Criar Page NotFound
-// Criar Loading Chamar API
-// Validação Inputs Expenses ok
