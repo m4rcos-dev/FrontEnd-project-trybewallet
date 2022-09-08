@@ -5,6 +5,7 @@ export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const VALUE_EXPENSE = 'VALUE_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const EDIT_FORM = 'EDIT_FORM';
 export const ADD_EDIT_EXPENSE = 'ADD_EDIT_EXPENSE';
 
 export const userEmail = (email) => ({ type: USER_EMAIL, email });
@@ -14,6 +15,7 @@ const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
 export const valueExpense = (value) => ({ type: VALUE_EXPENSE, value });
 export const deleteExpense = (arr) => ({ type: DELETE_EXPENSE, arr });
 export const editExpense = (id, isEdit) => ({ type: EDIT_EXPENSE, id, isEdit });
+export const editForm = (isEdit, obj) => ({ type: EDIT_FORM, isEdit, obj });
 export const addEditExpense = (value) => ({ type: ADD_EDIT_EXPENSE, value });
 
 export const fetchCurrencyWallet = () => async (dispatch) => {

@@ -6,6 +6,7 @@ import {
   DELETE_EXPENSE,
   EDIT_EXPENSE,
   ADD_EDIT_EXPENSE,
+  EDIT_FORM,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -14,7 +15,15 @@ const INITIAL_STATE = {
   isFetching: false,
   error: '',
   editor: false, // valor booleano que indica de uma despesa está sendo editada
+  formEditor: false,
   idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
+  objToEdit: {
+    value: '',
+    description: '',
+    currency: '',
+    method: '',
+    tag: '',
+  },
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -51,6 +60,12 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       editor: action.isEdit,
       idToEdit: action.id,
+    };
+  case EDIT_FORM:
+    return {
+      ...state,
+      formEditor: action.isEdit,
+      objToEdit: action.obj,
     };
   case ADD_EDIT_EXPENSE:
     return {
