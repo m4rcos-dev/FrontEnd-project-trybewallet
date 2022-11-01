@@ -13,7 +13,7 @@
 <p>Carteira virtual com cotação em tempo real e conversão de moeda usando API</p>
 <p>O objetivo do projeto era criar um aplicação utilizando o React e manipulação de estado global com Redux, juntamente com uma API pública para converter a moeda em tempo real.</p>
 
-## 🔨 Project features
+## 🔨 Recursos do projeto
 
 <ul>
 <li>Mobile First</li>
